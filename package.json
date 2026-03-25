@@ -1,0 +1,26 @@
+{
+  "name": "cvmaker-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for CV Maker — generate pixel-perfect CV PDFs locally via AI",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.9.0",
+    "puppeteer": "^24.4.0",
+    "zod": "^3.24.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["mcp", "cv", "resume", "pdf", "ai"],
+  "author": "nigamelastic",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nigamelastic/cvmaker_mcp.git"
+  }
+}
