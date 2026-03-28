@@ -19,15 +19,31 @@ A local [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server 
   - [Cursor](https://www.cursor.com/)
   - Any client supporting the MCP stdio transport
 
-## Installation
+## Quick Start (No Install)
 
-```bash
-git clone https://github.com/nigamelastic/cvmaker_mcp.git
-cd cvmaker_mcp
-npm install
+You can run the MCP server directly using `npx` in your MCP client configuration (Claude Desktop, Cursor, etc.):
+
+```json
+{
+  "mcpServers": {
+    "cvmaker": {
+      "command": "npx",
+      "args": ["-y", "cvmaker-mcp"]
+    }
+  }
+}
 ```
 
-> `npm install` will automatically download Chromium (~170MB) via Puppeteer. This is a one-time step.
+> [!TIP]
+> **Smart Browser Detection**: The first time you run this, it will check for a system browser (Chrome/Brave/Chromium). If none is found, it will automatically download a lightweight version (~130MB) and notify you via logs.
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) v18 or later
+- An MCP-compatible AI client:
+  - [Claude Desktop](https://claude.ai/download)
+  - [Cursor](https://www.cursor.com/)
+  - Any client supporting the MCP stdio transport
 
 ## Configuration
 
@@ -43,18 +59,23 @@ Add the following to your Claude Desktop config file:
 {
   "mcpServers": {
     "cvmaker": {
-      "command": "node",
-      "args": ["/absolute/path/to/cvmaker_mcp/src/index.js"]
+      "command": "npx",
+      "args": ["-y", "cvmaker-mcp"]
     }
   }
 }
 ```
 
-Replace `/absolute/path/to/cvmaker_mcp` with the actual path where you cloned this repo.
+### Development / Manual Installation
 
-### Cursor
+If you prefer to run from source:
 
-Add the same block to your Cursor MCP settings (`.cursor/mcp.json` in your project or global config).
+```bash
+git clone https://github.com/nigamelastic/cvmaker_mcp.git
+cd cvmaker_mcp
+npm install
+node src/index.js
+```
 
 ## Usage
 
@@ -98,6 +119,12 @@ Once configured and Claude Desktop is restarted, you can use natural language:
 - Payload size is capped at 100KB
 - The target URL is hardcoded — it cannot be overridden by tool input
 - Generated PDFs are written to your OS temp directory (`/tmp` on Linux/macOS)
+
+## Warranty and Liability Disclaimer
+
+This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
+
+**Use of third-party site:** This MCP server interacts with `https://resume.nigamelastic.com/`. While this server sanitizes data locally before injection, the user acknowledges that they are responsible for the content they process and that the final PDF rendering occurs within a headless browser instance.
 
 ## License
 

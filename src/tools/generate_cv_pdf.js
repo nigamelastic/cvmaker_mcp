@@ -1,9 +1,10 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import os from 'os';
 import path from 'path';
 import crypto from 'crypto';
 import { GenerateCvPdfInputSchema, TEMPLATES } from '../schema.js';
 import { sanitizeData, assertPayloadSize } from '../sanitize.js';
+import { getBrowserExecutable } from '../browser.js';
 
 // The live CV Maker site — hardcoded, never accepted as user input
 const CV_MAKER_URL = 'https://resume.nigamelastic.com/';
@@ -78,7 +79,10 @@ Available templates: ${TEMPLATES.join(', ')}`,
             // ── 5. Launch headless browser ────────────────────────────────────
             let browser;
             try {
+                const executablePath = await getBrowserExecutable();
+                
                 browser = await puppeteer.launch({
+                    executablePath,
                     headless: true,
                     args: [
                         '--no-sandbox',

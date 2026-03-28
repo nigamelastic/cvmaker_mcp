@@ -1,0 +1,34 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Publish if version changed
+        run: |
+          # Use a community action or simple script to check if version exists on npm
+          VERSION=$(node -p "require('./package.json').version")
+          NAME=$(node -p "require('./package.json').name")
+          
+          if npm view $NAME@$VERSION version >/dev/null 2>&1; then
+            echo "Version $VERSION already exists on NPM. Skipping publish."
+          else
+            echo "New version $VERSION detected. Publishing to NPM..."
+            npm publish --access public
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
