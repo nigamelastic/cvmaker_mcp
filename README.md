@@ -28,7 +28,7 @@ You can run the MCP server directly using `npx` in your MCP client configuration
   "mcpServers": {
     "cvmaker": {
       "command": "npx",
-      "args": ["-y", "cvmaker-mcp"]
+      "args": ["-y", "@nigamelastic/cvmaker-mcp"]
     }
   }
 }
@@ -60,7 +60,7 @@ Add the following to your Claude Desktop config file:
   "mcpServers": {
     "cvmaker": {
       "command": "npx",
-      "args": ["-y", "cvmaker-mcp"]
+      "args": ["-y", "@nigamelastic/cvmaker-mcp"]
     }
   }
 }
