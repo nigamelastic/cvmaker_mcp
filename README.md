@@ -7,7 +7,7 @@ A local [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server 
 1. You describe your background to an AI assistant (e.g. Claude Desktop)
 2. The AI structures your information and calls this MCP tool
 3. The AI will explicitly ask where you want the final PDF saved, ensuring total control over the output destination.
-4. A local headless browser securely visits [resume.nigamelastic.com](https://resume.nigamelastic.com/), computationally injects your CV data locally (without transmitting to any backend server), and captures the A4 PDF.
+4. A local headless browser securely visits [resume.nigamelastic.com](https://resume.nigamelastic.com/), computationally injects your CV data locally (without transmitting to any backend server), and captures the resume in PDF format.
 5. In addition to PDFs, the AI can securely save or load your structured "profiles" as `.cv.json` files directly to your hard drive, bypassing cloud storage entirely.
 
 **🔒 Privacy first:** Your CV data is injected into a local browser's `localStorage` and is **never sent to any external server.**
