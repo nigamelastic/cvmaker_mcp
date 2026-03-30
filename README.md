@@ -95,6 +95,8 @@ Once configured and Claude Desktop is restarted, you can use natural language:
 | `elegant` | Sophisticated serif-accented layout |
 | `sidebar` | Two-column with a dark sidebar |
 | `tech` | Developer-focused, monospace accents |
+| `europass` | Traditional, highly structured European standardized layout |
+| `executive` | Formal, dense layout optimized for extensive senior experience |
 
 ## Tool Reference
 
@@ -140,13 +142,7 @@ A helper tool for validating AI-extracted resume/LinkedIn text explicitly agains
 ### `get_available_templates`
 Fetches a list of valid template string IDs supported by CV Maker without requiring manual code inspection.
 
-## Security
 
-- HTML tags are stripped from all string inputs before injection
-- Prototype pollution keys (`__proto__`, `constructor`) are blocked
-- Payload size is capped at 100KB
-- The target URL is hardcoded — it cannot be overridden by tool input
-- Generated PDFs are written to your OS temp directory (`/tmp` on Linux/macOS)
 
 ## Warranty and Liability Disclaimer
 
