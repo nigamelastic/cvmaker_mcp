@@ -63,9 +63,7 @@ export const ImportCvJsonInputSchema = z.object({
     file_path: z.string().max(1024),
 });
 
-export const GetLivePreviewUrlInputSchema = z.object({
-    cv: CVSchema,
-});
+
 
 export const ExtractResumeDataInputSchema = z.object({
     cv: CVSchema, // the AI will have to construct the JSON to call this tool
