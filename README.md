@@ -99,7 +99,7 @@ Once configured and Claude Desktop is restarted, you can use natural language:
 ## Tool Reference
 
 ### `generate_cv_pdf`
-
+Generates a pixel-perfect A4 PDF using the CV Maker engine natively.
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `cv.personal` | object | ✅ | Name, title, email, phone, website, location, summary |
@@ -111,6 +111,34 @@ Once configured and Claude Desktop is restarted, you can use natural language:
 | `output_filename` | string | — | PDF filename without extension |
 
 **Returns:** File path to the generated PDF on your local machine.
+
+### `export_cv_json`
+Saves the structured CV JSON to a local file in `~/.cvmaker-profiles/`. Perfect for saving "profiles" to iterate on later.
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `cv` | object | ✅ | structured CV JSON Payload |
+| `output_filename` | string | — | Desired profile filename without extension |
+
+### `import_cv_json`
+Loads a previously saved CV JSON profile from your hard drive structure back into the AI context.
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `file_path` | string | ✅ | Absolute absolute path to the `.cv.json` file |
+
+### `get_live_preview_url`
+Generates a payload or standalone file locally for previewing the CV JSON on `resume.nigamelastic.com`.
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `cv` | object | ✅ | structured CV JSON Payload |
+
+### `extract_resume_data`
+A helper tool for validating AI-extracted resume/LinkedIn text explicitly against the strict CV JSON Schema before doing heavier rendering operations.
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `cv` | object | ✅ | structured CV JSON Payload |
+
+### `get_available_templates`
+Fetches a list of valid template string IDs supported by CV Maker without requiring manual code inspection.
 
 ## Security
 

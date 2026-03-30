@@ -36,7 +36,7 @@ export const CustomSectionSchema = z.object({
 });
 
 export const TEMPLATES = /** @type {const} */ ([
-    'standard', 'modern', 'minimal', 'elegant', 'sidebar', 'tech',
+    'standard', 'modern', 'minimal', 'elegant', 'sidebar', 'tech', 'europass', 'executive',
 ]);
 
 export const CVSchema = z.object({
@@ -51,4 +51,21 @@ export const CVSchema = z.object({
 export const GenerateCvPdfInputSchema = z.object({
     cv: CVSchema,
     output_filename: z.string().max(200).optional(),
+});
+
+export const ExportCvJsonInputSchema = z.object({
+    cv: CVSchema,
+    output_filename: z.string().max(200).optional(),
+});
+
+export const ImportCvJsonInputSchema = z.object({
+    file_path: z.string().max(1024),
+});
+
+export const GetLivePreviewUrlInputSchema = z.object({
+    cv: CVSchema,
+});
+
+export const ExtractResumeDataInputSchema = z.object({
+    cv: CVSchema, // the AI will have to construct the JSON to call this tool
 });

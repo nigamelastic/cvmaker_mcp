@@ -118,11 +118,12 @@ Available templates: ${TEMPLATES.join(', ')}`,
                 await new Promise(resolve => setTimeout(resolve, 800));
 
                 // ── 9. Print to PDF ───────────────────────────────────────────
+                // Using Puppeteer's native PDF generation creates a lean, vector-based PDF (perfect for ATS),
+                // while relying on the exact @media print CSS rules we perfected in the main app.
                 await page.pdf({
                     path: outputPath,
-                    format: 'A4',
                     printBackground: true,
-                    margin: { top: 0, right: 0, bottom: 0, left: 0 },
+                    preferCSSPageSize: true, // Respects @page { size: A4; margin: 10mm; }
                 });
 
                 return {
