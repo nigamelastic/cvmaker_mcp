@@ -1,7 +1,7 @@
 {
   "name": "@nigamelastic/cvmaker-mcp",
-  "version": "1.0.0",
-  "description": "MCP server for CV Maker — generate pixel-perfect CV PDFs locally via AI",
+  "version": "1.1.0",
+  "description": "MCP server for CV Maker — generate pixel-perfect CV PDFs via AI",
   "type": "module",
   "bin": {
     "cvmaker-mcp": "src/index.js"

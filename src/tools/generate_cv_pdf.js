@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer-core';
 import os from 'os';
 import path from 'path';
 import crypto from 'crypto';
+import fs from 'fs';
 import { GenerateCvPdfInputSchema, TEMPLATES } from '../schema.js';
 import { sanitizeData, assertPayloadSize } from '../sanitize.js';
 import { getBrowserExecutable } from '../browser.js';
@@ -51,7 +52,7 @@ The tool accepts a structured CV JSON object and an optional template name, then
 
 Available templates: ${TEMPLATES.join(', ')}`,
         GenerateCvPdfInputSchema.shape,
-        async ({ cv, output_filename }) => {
+        async ({ cv, destination_dir, output_filename }) => {
             const validatedCv = cv;
             const rawFilename = output_filename;
 
@@ -74,7 +75,14 @@ Available templates: ${TEMPLATES.join(', ')}`,
                 .slice(0, 100);
             const uniqueSuffix = crypto.randomBytes(4).toString('hex');
             const filename = `${nameSlug}_${uniqueSuffix}.pdf`;
-            const outputPath = path.join(os.tmpdir(), filename);
+            
+            // Resolve directory or fallback to tmpdir just in case
+            const destDir = destination_dir ? path.resolve(destination_dir) : os.tmpdir();
+            if (destination_dir && !fs.existsSync(destDir)) {
+                fs.mkdirSync(destDir, { recursive: true });
+            }
+            
+            const outputPath = path.join(destDir, filename);
 
             // ── 5. Launch headless browser ────────────────────────────────────
             let browser;
@@ -118,11 +126,12 @@ Available templates: ${TEMPLATES.join(', ')}`,
                 await new Promise(resolve => setTimeout(resolve, 800));
 
                 // ── 9. Print to PDF ───────────────────────────────────────────
+                // Using Puppeteer's native PDF generation creates a lean, vector-based PDF (perfect for ATS),
+                // while relying on the exact @media print CSS rules we perfected in the main app.
                 await page.pdf({
                     path: outputPath,
-                    format: 'A4',
                     printBackground: true,
-                    margin: { top: 0, right: 0, bottom: 0, left: 0 },
+                    preferCSSPageSize: true, // Respects @page { size: A4; margin: 10mm; }
                 });
 
                 return {

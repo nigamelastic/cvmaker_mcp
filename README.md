@@ -6,8 +6,9 @@ A local [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server 
 
 1. You describe your background to an AI assistant (e.g. Claude Desktop)
 2. The AI structures your information and calls this MCP tool
-3. A local headless browser visits [resume.nigamelastic.com](https://resume.nigamelastic.com/), injects your CV data, and captures an A4 PDF using the site's print stylesheet
-4. The PDF is saved to your machine's temp folder and the path is returned
+3. The AI will explicitly ask where you want the final PDF saved, ensuring total control over the output destination.
+4. A local headless browser securely visits [resume.nigamelastic.com](https://resume.nigamelastic.com/), computationally injects your CV data locally (without transmitting to any backend server), and captures the resume in PDF format.
+5. In addition to PDFs, the AI can securely save or load your structured "profiles" as `.cv.json` files directly to your hard drive, bypassing cloud storage entirely.
 
 **🔒 Privacy first:** Your CV data is injected into a local browser's `localStorage` and is **never sent to any external server.**
 
@@ -95,11 +96,13 @@ Once configured and Claude Desktop is restarted, you can use natural language:
 | `elegant` | Sophisticated serif-accented layout |
 | `sidebar` | Two-column with a dark sidebar |
 | `tech` | Developer-focused, monospace accents |
+| `europass` | Traditional, highly structured European standardized layout |
+| `executive` | Formal, dense layout optimized for extensive senior experience |
 
 ## Tool Reference
 
 ### `generate_cv_pdf`
-
+Generates a pixel-perfect A4 PDF using the CV Maker engine natively.
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `cv.personal` | object | ✅ | Name, title, email, phone, website, location, summary |
@@ -108,17 +111,40 @@ Once configured and Claude Desktop is restarted, you can use natural language:
 | `cv.skills` | array | ✅ | List of skill strings |
 | `cv.customSections` | array | — | Up to 4 custom `{ title, content }` sections |
 | `cv.activeTemplate` | string | — | Template name (default: `standard`) |
+| `destination_dir` | string | ✅ | Absolute directory path where you want the PDF saved |
 | `output_filename` | string | — | PDF filename without extension |
 
 **Returns:** File path to the generated PDF on your local machine.
 
-## Security
+### `export_cv_json`
+Saves the structured CV JSON to a local file in `~/.cvmaker-profiles/`. Perfect for saving "profiles" to iterate on later.
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `cv` | object | ✅ | structured CV JSON Payload |
+| `output_filename` | string | — | Desired profile filename without extension |
 
-- HTML tags are stripped from all string inputs before injection
-- Prototype pollution keys (`__proto__`, `constructor`) are blocked
-- Payload size is capped at 100KB
-- The target URL is hardcoded — it cannot be overridden by tool input
-- Generated PDFs are written to your OS temp directory (`/tmp` on Linux/macOS)
+### `import_cv_json`
+Loads a previously saved CV JSON profile from your hard drive structure back into the AI context.
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `file_path` | string | ✅ | Absolute absolute path to the `.cv.json` file |
+
+### `get_live_preview_url`
+Generates a payload or standalone file locally for previewing the CV JSON on `resume.nigamelastic.com`.
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `cv` | object | ✅ | structured CV JSON Payload |
+
+### `extract_resume_data`
+A helper tool for validating AI-extracted resume/LinkedIn text explicitly against the strict CV JSON Schema before doing heavier rendering operations.
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `cv` | object | ✅ | structured CV JSON Payload |
+
+### `get_available_templates`
+Fetches a list of valid template string IDs supported by CV Maker without requiring manual code inspection.
+
+
 
 ## Warranty and Liability Disclaimer
 

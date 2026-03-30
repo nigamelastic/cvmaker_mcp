@@ -1,5 +1,8 @@
 node_modules/
 *.pdf
+*.cv.json
+*.cv.html
 .env
 CONTEXT.md
 context.md
+.cursorrules
