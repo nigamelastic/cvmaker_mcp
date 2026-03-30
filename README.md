@@ -129,11 +129,7 @@ Loads a previously saved CV JSON profile from your hard drive structure back int
 |---|---|---|---|
 | `file_path` | string | ✅ | Absolute absolute path to the `.cv.json` file |
 
-### `get_live_preview_url`
-Generates a payload or standalone file locally for previewing the CV JSON on `resume.nigamelastic.com`.
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `cv` | object | ✅ | structured CV JSON Payload |
+
 
 ### `extract_resume_data`
 A helper tool for validating AI-extracted resume/LinkedIn text explicitly against the strict CV JSON Schema before doing heavier rendering operations.
