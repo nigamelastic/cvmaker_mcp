@@ -50,6 +50,7 @@ export const CVSchema = z.object({
 
 export const GenerateCvPdfInputSchema = z.object({
     cv: CVSchema,
+    destination_dir: z.string().describe("Absolute path to the directory where the PDF will be saved. You MUST ask the user for this location before calling the tool (e.g., 'Where should I save this PDF?')."),
     output_filename: z.string().max(200).optional(),
 });
 
